@@ -65,7 +65,7 @@ def verifica_anomalie(df):
     df = df[df['Tariffa_Mensile'] > 0]
     return df
 
-df_senza_anomalie = verifica_anomalie(df)
+df = verifica_anomalie(df)
 #print("Dataset senza anomalie: \n", df_senza_anomalie, "\n")
 
 
@@ -75,7 +75,7 @@ def aggiungi_colonna(df_senza_anomalie):
     #print("DataFrame con colonna Costo_per_GB: \n", df_senza_anomalie, "\n")
     return df_senza_anomalie
 
-df = aggiungi_colonna(df_senza_anomalie)
+df = aggiungi_colonna(df)
 
     
 def raggruppamento(df):

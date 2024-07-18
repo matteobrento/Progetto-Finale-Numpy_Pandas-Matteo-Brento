@@ -31,16 +31,15 @@ while True:
     elif opzione == "3":
         df_senza_anomalie = pf.verifica_anomalie(df)
         print("\nDataFrame con colonna aggiunta: \n")
-        print(pf.aggiungi_colonna(df_senza_anomalie))
-        df = pf.aggiungi_colonna(df_senza_anomalie)
+        print(pf.aggiungi_colonna(df))
+        df = pf.aggiungi_colonna(df)
         pf.raggruppamento(df)
         df = pf.conversione_valore_categorico_in_numerico(df)
         pf.correlazione(df)
     elif opzione == "4": 
         print("\nDataFrame con conversione di valori categorici in numerici (Churn): \n")
         print(pf.conversione_valore_categorico_in_numerico(df), "\n")
-        df_senza_anomalie = pf.verifica_anomalie(df)
-        df = pf.aggiungi_colonna(df_senza_anomalie)
+        df = pf.aggiungi_colonna(df)
         df = pf.conversione_valore_categorico_in_numerico(df)
         pf.normalizzazione(df)
     else:
