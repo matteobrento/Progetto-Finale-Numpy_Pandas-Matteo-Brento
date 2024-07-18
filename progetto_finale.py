@@ -102,14 +102,14 @@ def correlazione(df):
     print("Correlazione dei dati tramite coefficiente di Pearson tra 1  e -1: \n", correlazione, "\n")
 
 def normalizzazione(df):
-    numerici = ['Età', 'Durata_Abbonamento', 'Tariffa_Mensile', 'Dati_Consumati', 'Churn', 'Costo_per_GB']
+    colonne = ['Età', 'Durata_Abbonamento', 'Tariffa_Mensile', 'Dati_Consumati', 'Servizio_Clienti_Contatti', 'Churn', 'Costo_per_GB']
     
-    for colonna in numerici:
+    for colonna in colonne:
         min_value = df[colonna].min()
         max_value = df[colonna].max()
         df[colonna] = (df[colonna] - min_value) / (max_value - min_value)
     
-    print("DataFrame con colonne numeriche normalizzate: \n", df[numerici], "\n")
+    print("DataFrame con colonne numeriche normalizzate: \n", df[colonne], "\n")
     return df
 
    
