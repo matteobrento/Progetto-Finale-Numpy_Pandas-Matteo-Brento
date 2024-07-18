@@ -42,5 +42,5 @@ def salva_dataframe():
     print("DataFrame salvato")
     return df
 
-salva_dataframe()
+#salva_dataframe()
 

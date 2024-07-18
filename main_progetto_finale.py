@@ -11,7 +11,9 @@ def menu():
 
 try:
     df = pf.carica_da_csv()
+    print("DataFrame Iniziale: \n", df.to_string(index=False), "\n")
 except:
+    print("Nessun DataFrame caricato.")
     df = cd.salva_dataframe()
 
 while True:
@@ -36,11 +38,15 @@ while True:
         pf.correlazione(df)
     elif opzione == "4": 
         print("\nDataFrame con conversione di valori categorici in numerici (Churn): \n")
-        print(pf.conversione_valore_categorico_in_numerico(df))
+        print(pf.conversione_valore_categorico_in_numerico(df), "\n")
+        df_senza_anomalie = pf.verifica_anomalie(df)
+        df = pf.aggiungi_colonna(df_senza_anomalie)
+        df = pf.conversione_valore_categorico_in_numerico(df)
+        pf.normalizzazione(df)
     else:
         print("Scelta non disponibile")
 
-    continua = input("Vuoi effettuare un'altra operazione? ")   #ripetibilità
+    continua = input("\nVuoi effettuare un'altra operazione? ")   #ripetibilità
     if continua.lower() != "si":
         print("\nArrivederci")
         break

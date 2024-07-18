@@ -85,7 +85,7 @@ def raggruppamento(df):
         'Durata_Abbonamento': ['mean', 'median', 'std'],
         'Tariffa_Mensile': ['mean', 'median', 'std']
     })
-    print("Relazione tra Età, Durata_Abbonamento, Tariffa_Mensile raggruppando per Churn: \n", raggruppamento, "\n")
+    print("\nRelazione tra Età, Durata_Abbonamento, Tariffa_Mensile raggruppando per Churn: \n", raggruppamento, "\n")
 
 
 def conversione_valore_categorico_in_numerico(df):
@@ -101,39 +101,19 @@ def correlazione(df):
     correlazione = df.corr()
     print("Correlazione dei dati tramite coefficiente di Pearson tra 1  e -1: \n", correlazione, "\n")
 
+def normalizzazione(df):
+    numerici = ['Età', 'Durata_Abbonamento', 'Tariffa_Mensile', 'Dati_Consumati', 'Churn', 'Costo_per_GB']
+    
+    for colonna in numerici:
+        min_value = df[colonna].min()
+        max_value = df[colonna].max()
+        df[colonna] = (df[colonna] - min_value) / (max_value - min_value)
+    
+    print("DataFrame con colonne numeriche normalizzate: \n", df[numerici], "\n")
+    return df
+
    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-""" 
-distribuzione_dati(df)
-informazione_dati(df)
-valori_mancanti(df)
-pulizia_dati(df) 
-"""
 
 
 
