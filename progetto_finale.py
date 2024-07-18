@@ -66,16 +66,47 @@ def verifica_anomalie(df):
     return df
 
 df_senza_anomalie = verifica_anomalie(df)
-print("Dataset dopo la correzione delle anomalie: \n", df_senza_anomalie, "\n")
+#print("Dataset senza anomalie: \n", df_senza_anomalie, "\n")
 
 
 def aggiungi_colonna(df_senza_anomalie):
 
-    df_senza_anomalie["Costo_per_GB"] = df_senza_anomalie["Tariffa_Mensile"]//df_senza_anomalie["Dati_Consumati"]
-    print("DataFrame con colonna Costo_per_GB: \n", df_senza_anomalie, "\n")
+    df_senza_anomalie["Costo_per_GB"] = df_senza_anomalie["Tariffa_Mensile"]/df_senza_anomalie["Dati_Consumati"]
+    #print("DataFrame con colonna Costo_per_GB: \n", df_senza_anomalie, "\n")
     return df_senza_anomalie
 
-df = aggiungi_colonna()
+df = aggiungi_colonna(df_senza_anomalie)
+
+    
+def raggruppamento(df):
+
+    raggruppamento = df.groupby('Churn').agg({
+        'Età': ['mean', 'median', 'std'],
+        'Durata_Abbonamento': ['mean', 'median', 'std'],
+        'Tariffa_Mensile': ['mean', 'median', 'std']
+    })
+    print("Relazione tra Età, Durata_Abbonamento, Tariffa_Mensile raggruppando per Churn: \n", raggruppamento, "\n")
+
+
+def conversione_valore_categorico_in_numerico(df):
+
+    df['Churn'] = df['Churn'].map(lambda x: 1 if x == 'si' else 0)
+    #print("DataFrame Aggiornato: \n", df, "\n")
+    return df
+
+df = conversione_valore_categorico_in_numerico(df)
+
+def correlazione(df):
+
+    correlazione = df.corr()
+    print("Correlazione dei dati tramite coefficiente di Pearson tra 1  e -1: \n", correlazione, "\n")
+
+   
+
+
+
+
+
 
 
 

@@ -40,7 +40,7 @@ def salva_dataframe():
     df = crea_dataset()
     df.to_csv('C:\\Users\\matte\\AcademyItConsulting\\Esercitazioni\\18.07\\dataframe.csv', index=False)
     print("DataFrame salvato")
-
+    return df
 
 salva_dataframe()
 
