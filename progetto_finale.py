@@ -36,81 +36,90 @@ Valutare la performance del modello attraverso metriche come l'accuratezza e l'A
 import pandas as pd
 import numpy as np
 
-def carica_da_csv():
-    file_path = 'C:\\Users\\matte\\AcademyItConsulting\\Esercitazioni\\18.07\\dataframe.csv'
-    df = pd.read_csv(file_path)
-    return df
+class Compagnia_Telefonica:
 
-df = carica_da_csv()
+    def __init__(self):
+        self.df = None
 
-def distribuzione_dati(df):
-    descrizione = df.describe(include='all')
-    print("Distribuzione dati con describe: \n", descrizione, "\n")
+    def carica_da_csv(self):
+        self.file_path = 'C:\\Users\\matte\\AcademyItConsulting\\Esercitazioni\\18.07\\dataframe.csv'
+        self.df = pd.read_csv(self.file_path)
+        return self.df
 
-def informazione_dati(df):
-    info = df.info()
-    print("Info: \n", info, "\n")
+    def distribuzione_dati(self):
+        self.descrizione = self.df.describe(include='all')
+        print("Distribuzione dati con describe: \n", self.descrizione, "\n")
 
-def valori_mancanti(df):
-    missing_values = df.isnull().sum()
-    print("Valori mancanti per colonna: \n", missing_values, "\n")
+    def informazione_dati(self):
+        self.info = self.df.info()
+        print("Info: \n", self.info, "\n")
 
-def pulizia_dati(df):
-    df_cleaned = df.dropna()
-    print("Rimozione delle righe dove almeno un elemento è mancante: \n", df_cleaned, "\n")
-    return df_cleaned
+    def valori_mancanti(self):
+        self.missing_values = self.df.isnull().sum()
+        print("Somma valori mancanti per colonna: \n", self.missing_values, "\n")
 
-def verifica_anomalie(df):
-    df = df[(df['Età'] > 0) & (df['Età'] <= 100)]
-    df = df[df['Tariffa_Mensile'] > 0]
-    return df
+    def pulizia_dati(self, strategia):
+        
+        if strategia == 'rimuovi':
+            self.df = self.df.dropna()
+            print("Rimozione delle righe con valore mancante: \n", self.df, "\n")
+        elif strategia == 'mean':
+            self.df.fillna(self.df.mean(), inplace=True)
+            print("Sostituzioni dei valori mancanti con la media dei valori in colonna: \n", self.df, "\n")
+        elif strategia == 'median':
+            self.df.fillna(self.df.median(), inplace=True)
+            print("Sostituzioni dei valori mancanti con la mediana dei valori in colonna: \n", self.df, "\n")
+        else:
+            print("Opzione non valida!")
 
-df = verifica_anomalie(df)
-#print("Dataset senza anomalie: \n", df_senza_anomalie, "\n")
+        print("\nDataframe dopo la pulizia dei dati: \n", self.df, "\n")
+        return self.df
 
-
-def aggiungi_colonna(df_senza_anomalie):
-
-    df_senza_anomalie["Costo_per_GB"] = df_senza_anomalie["Tariffa_Mensile"]/df_senza_anomalie["Dati_Consumati"]
-    #print("DataFrame con colonna Costo_per_GB: \n", df_senza_anomalie, "\n")
-    return df_senza_anomalie
-
-df = aggiungi_colonna(df)
-
-    
-def raggruppamento(df):
-
-    raggruppamento = df.groupby('Churn').agg({
-        'Età': ['mean', 'median', 'std'],
-        'Durata_Abbonamento': ['mean', 'median', 'std'],
-        'Tariffa_Mensile': ['mean', 'median', 'std']
-    })
-    print("\nRelazione tra Età, Durata_Abbonamento, Tariffa_Mensile raggruppando per Churn: \n", raggruppamento, "\n")
+    def verifica_anomalie(self):
+        self.df = self.df[(self.df['Età'] > 0) & (self.df['Età'] <= 100)]
+        self.df = self.df[self.df['Tariffa_Mensile'] > 0]
+        print("DataFrame dopo la verifica delle anomalie: \n", self.df, "\n")
+        return self.df
 
 
-def conversione_valore_categorico_in_numerico(df):
+    def aggiungi_colonna(self):
 
-    df['Churn'] = df['Churn'].map(lambda x: 1 if x == 'si' else 0)
-    #print("DataFrame Aggiornato: \n", df, "\n")
-    return df
+        self.df["Costo_per_GB"] = self.df["Tariffa_Mensile"]/self.df["Dati_Consumati"]
+        self.df["Costo_per_GB"] = self.df["Costo_per_GB"].fillna(self.df["Costo_per_GB"].mean())
+        print("DataFrame con colonna Costo_per_GB: \n", self.df, "\n")
+        return self.df
 
-df = conversione_valore_categorico_in_numerico(df)
+    def raggruppamento(self):
 
-def correlazione(df):
+        self.raggruppamento = self.df.groupby('Churn').agg({
+            'Età': ['mean', 'median', 'std'],
+            'Durata_Abbonamento': ['mean', 'median', 'std'],
+            'Tariffa_Mensile': ['mean', 'median', 'std']
+        })
+        print("\nRelazione tra Età, Durata_Abbonamento, Tariffa_Mensile raggruppando per Churn: \n", self.raggruppamento, "\n")
 
-    correlazione = df.corr()
-    print("Correlazione dei dati tramite coefficiente di Pearson tra 1  e -1: \n", correlazione, "\n")
+    def conversione_valore_categorico_in_numerico(self):
 
-def normalizzazione(df):
-    colonne = ['Età', 'Durata_Abbonamento', 'Tariffa_Mensile', 'Dati_Consumati', 'Servizio_Clienti_Contatti', 'Churn', 'Costo_per_GB']
-    
-    for colonna in colonne:
-        min_value = df[colonna].min()
-        max_value = df[colonna].max()
-        df[colonna] = (df[colonna] - min_value) / (max_value - min_value)
-    
-    print("DataFrame con colonne numeriche normalizzate: \n", df[colonne], "\n")
-    return df
+        self.df['Churn'] = self.df['Churn'].map(lambda x: 1 if x == 'si' else 0)
+        print("Conversione di Churn da Categorico a Numerico: \n", self.df, "\n")
+        return self.df
+
+    def correlazione(self):
+
+        self.correlazione = self.df.corr()
+        print("Correlazione dei dati tramite coefficiente di Pearson tra 1  e -1: \n", self.correlazione, "\n")
+
+    def normalizzazione(self):
+
+        self.colonne = ['Età', 'Durata_Abbonamento', 'Tariffa_Mensile', 'Dati_Consumati', 'Servizio_Clienti_Contatti', 'Churn', 'Costo_per_GB']
+        
+        for colonna in self.colonne:
+            min_value = self.df[colonna].min()
+            max_value = self.df[colonna].max()
+            self.df[colonna] = (self.df[colonna] - min_value) / (max_value - min_value)
+        
+        print("DataFrame con colonne numeriche normalizzate: \n", self.df[self.colonne], "\n")
+        return self.df
 
    
 

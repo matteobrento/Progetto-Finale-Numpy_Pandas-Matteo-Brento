@@ -9,11 +9,13 @@ def menu():
     print("3. Analisi Esplorativa dei Dati (EDA)")
     print("4. Preparazione dati per la modellazione")
 
+compagnia = pf.Compagnia_Telefonica()
+
 try:
-    df = pf.carica_da_csv()
-    print("DataFrame Iniziale: \n", df.to_string(index=False), "\n")
-except:
-    print("Nessun DataFrame caricato.")
+    df = compagnia.carica_da_csv()
+    print("DataFrame Iniziale: \n", df, "\n")
+except FileNotFoundError:
+    print("Nessun DataFrame caricato. Recuperalo tramite Salvataggio: \n")
     df = cd.salva_dataframe()
 
 while True:
@@ -21,27 +23,21 @@ while True:
     menu_finale = menu()
     opzione = input("\nScegli l'operazione che desideri effettuare: ") 
     if opzione == "1":
-        pf.distribuzione_dati(df)
-        pf.informazione_dati(df)
-        pf.valori_mancanti(df)
+        compagnia.distribuzione_dati()
+        compagnia.informazione_dati()
+        compagnia.valori_mancanti()
     elif opzione == "2":
-        pf.pulizia_dati(df)
-        print("\nDataFrame senza anomalie: \n")
-        print(pf.verifica_anomalie(df))
+        compagnia.conversione_valore_categorico_in_numerico()
+        strategia = input("\nInserisci strategia scegliendo tra rimuovi, mean o median: ")
+        compagnia.pulizia_dati(strategia)
+        compagnia.verifica_anomalie()
     elif opzione == "3":
-        df_senza_anomalie = pf.verifica_anomalie(df)
-        print("\nDataFrame con colonna aggiunta: \n")
-        print(pf.aggiungi_colonna(df))
-        df = pf.aggiungi_colonna(df)
-        pf.raggruppamento(df)
-        df = pf.conversione_valore_categorico_in_numerico(df)
-        pf.correlazione(df)
+        compagnia.verifica_anomalie()
+        compagnia.aggiungi_colonna()
+        compagnia.raggruppamento()
+        compagnia.correlazione()
     elif opzione == "4": 
-        print("\nDataFrame con conversione di valori categorici in numerici (Churn): \n")
-        print(pf.conversione_valore_categorico_in_numerico(df), "\n")
-        df = pf.aggiungi_colonna(df)
-        df = pf.conversione_valore_categorico_in_numerico(df)
-        pf.normalizzazione(df)
+        compagnia.normalizzazione()
     else:
         print("Scelta non disponibile")
 
