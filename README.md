@@ -6,7 +6,7 @@ Documentazione Pandas: https://pandas.pydata.org/docs/
 # Organizzazione del lavoro
 Dopo l'importazione del csv del DataFrame, intendo procedere con il punto 1 così da avere una descrizione accurata del DataFrame con cui sto lavorando. 
 Pertanto procedo in ordine così come le task sono distribuite.
-Suddivisione in funzioni e moduli.
+Suddivisione in funzioni, classi e moduli.
 
 # Gestione dei tempi
 Analisi Funzionale: 10min
@@ -22,7 +22,7 @@ Tempo Task 5: 40min  (Punto facoltativo, ma voglio provare a realizzarlo)
 # Analisi del lavoro
 Ho deciso di suddividere il mio codice in moduli. 
 Il primo modulo, 'crea_dataset.py', verte sulla generazione dei valori di riempimento del dataset, la creazione del dataset e il salvataggio di quest'ultimo su un file 'dataframe.csv'.
-Il secondo modulo, 'progetto_finale.py', crea innanzitutto un metodo 'carica_da_csv' per fare un read del dataset generato. Dopodichè nelle varie funzioni sono eseguite tutte le task richieste nella traccia.
+Il secondo modulo, 'progetto_finale.py', cre una classe principale Compagnia_Telefonica. All'interno crea il costruttore e successivamente un metodo 'carica_da_csv' per fare un read del dataset generato. Dopodichè nelle varie funzioni sono eseguite tutte le task richieste nella traccia.
 Il terzo modulo, 'main_progetto_finale.py', richiama al suo interno i due moduli precedenti. Dopodichè con effettua un controllo dell'esistenza del file csv da inserire in df. Se non lo trova (impossibile perchè il percorso è giusto), va in except, utilizzando salva_dataframe del primo modulo per prelevare un altro df generato casualmente.
 Il file 'dataframe.csv' è la base di appoggio per il salvataggio e il caricamento del dataset.
 
