@@ -85,7 +85,7 @@ class Compagnia_Telefonica:
     def aggiungi_colonna(self): #aggiunge una colonna nuova, costo gb calcolando da altre due colonne già esistenti
 
         self.df["Costo_per_GB"] = self.df["Tariffa_Mensile"]/self.df["Dati_Consumati"]
-        #self.df["Costo_per_GB"] = self.df["Costo_per_GB"].fillna(self.df["Costo_per_GB"].mean())
+        self.df["Costo_per_GB"] = self.df["Costo_per_GB"].fillna(self.df["Costo_per_GB"].mean())
         print("DataFrame con colonna Costo_per_GB: \n", self.df, "\n")
         return self.df
 
